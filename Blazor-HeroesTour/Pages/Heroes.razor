@@ -1,0 +1,20 @@
+﻿@using Blazor_HeroesTour.Models
+@layout MainLayout
+
+<h2>@hero.Name.ToUpper() Details</h2>
+<div><span>Id: </span>@hero.Id</div>
+<div>
+    <label>name:
+        <input @bind="@hero.Name" placeholder="name"/>
+    </label>
+</div>
+
+@code {
+
+    Hero hero = new Hero
+    {
+        Id = 1,
+        Name = "Windstorm"
+    };
+
+}
