@@ -1,20 +1,48 @@
-﻿@using Blazor_HeroesTour.Models
-@layout MainLayout
+﻿@layout MainLayout
 
-<h2>@hero.Name.ToUpper() Details</h2>
-<div><span>Id: </span>@hero.Id</div>
-<div>
-    <label>name:
-        <input @bind="@hero.Name" placeholder="name"/>
-    </label>
-</div>
+<h2>My Heroes</h2>
+<ul class="heroes">
+    @foreach (var hero in _heroes)
+    {
+        <li 
+            @onclick="(() => OnSelect(hero))"
+            class="@((hero == _selectedHero) ? "selected" : "")">
+            <span class="badge">@hero.Id</span> @hero.Name
+        </li>
+    }
+</ul>
+
+@if (_selectedHero != null)
+{
+    <h2>@_selectedHero.Name.ToUpper() Details</h2>
+    <div><span>Id: </span>@_selectedHero.Id</div>
+    <div>
+        <label>name:
+            <input @bind="@_selectedHero.Name" placeholder="name"/>
+        </label>
+    </div>
+}
 
 @code {
 
-    Hero hero = new Hero
+    HeroesService _service;
+    ICollection<Hero> _heroes;
+
+    protected override Task OnInitializedAsync()
     {
-        Id = 1,
-        Name = "Windstorm"
-    };
+        _service = new HeroesService();
+
+        _heroes = _service.GetHeroes();
+
+        return base.OnInitializedAsync();
+    }
+
+
+    Hero _selectedHero;
+
+    void OnSelect(Hero hero)
+    {
+        _selectedHero = hero;
+    }
 
 }
