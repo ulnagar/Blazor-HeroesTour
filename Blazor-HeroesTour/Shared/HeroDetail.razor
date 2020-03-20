@@ -1,0 +1,15 @@
+﻿@if (Hero != null)
+{
+    <h2>@Hero.Name.ToUpper() Details</h2>
+    <div><span>Id: </span>@Hero.Id</div>
+    <div>
+        <label>
+            name:
+            <input @bind="@Hero.Name" placeholder="name" />
+        </label>
+    </div>
+}
+
+@code {
+    [Parameter] public Hero Hero { get; set; }
+}
